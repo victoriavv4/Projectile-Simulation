@@ -1,0 +1,30 @@
+# The original code (up to v0.6) contained an error.  In each time step, we would update the position based on the
+        # velocity, and then check (below) if the positions of the cars had 'passed', indicating a crash during the
+        # time interval.  But there are (at least) a couple of problems here!:
+        #
+        # -Specifically, even though we said that cars couldn't pass each other, in the event of a crash (detected
+        # by the latter car's position moving ahead of the former), we left the new positions in place!  This placed
+        # the latter car ahead of the former (even if just for a short period of time)!
+        # -More generally, we violated the idea of calculating our values at time t based on those from time t-1.
+        #
+        # A couple of changes were made to improve this.
+        # - Calculate the projected new positions in temporary variables, before updating our state.
+        # - Update the positions only after all of the other calculations had been done.
+        #
+        # There are still issues with how we deal with the position itself at the time of collision.  If the cars would
+        # otherwise 'pass' from time t-1 to t (meaning a crash occurred between t-1 and t), what should their positions
+        # be at time t?
+        # -If we set them to the new positions (as we did in earlier versions), then car2 will be ahead of car1!
+        # -If we set them to the old positions, then effectively the cars don't move at all from t-1 to t, which
+        # is an unusual pause in the motion!
+        #
+        # Clearly, the new positions of the cars should be somewhere between the old position and the new position, and
+        # car1 should not be behind car2.  But what should the positions be?  Ideally, we should be able to calculate
+        # what happens in the interval _between_ steps... But that's not how discrete time generally works, and is, in
+        # fact, one of the drawbacks of it!  Two approaches can be useful here:
+        # -Use a reasonable assumption/calculation (and also test if it works).  Here, I have assumed in the event of a crash, the
+        # new positions of both cars will be the same, equal to the average of the projected new positions for the time
+        # step.
+        # -These problems crop up because of things that happen in the intervals of steps.  To reduce the impact
+        # of these issues, and get more accurate results, reduce the length of the time interval!  In fact, for something
+        # that happens as quickly as a car crash, 0.1 second intervals are very long.  Try in interval like 0.01 seconds.

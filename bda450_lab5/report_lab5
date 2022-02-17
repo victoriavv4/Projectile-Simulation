@@ -1,0 +1,33 @@
+a) 2 servers serving 1 lineup:
+Simulation run = 100 times
+Output Summary:
+
+Number of customers: 1000
+Total delay: 87698.2535
+Average delay: 87.6983
+Minimum delay: 0.0000
+Maximum delay: 186.0799
+Average wait time per customer across 100 runs: 126.2319
+Standard deviation of wait times across 100 runs: 18.1278
+
+
+b) 2 server with their own queues:
+Simulation run = 100 times
+Output Summary:
+
+Number of customers: 1000
+Total delay: 115878.5657
+Average delay: 115.8786
+Minimum delay: 0.0000
+Maximum delay: 256.8273
+Average wait time per customer across 100 runs: 128.2342
+Standard deviation of wait times across 100 runs: 16.9515
+
+
+
+When 1000 customers are processed and the simulation is run 100 times, the average wait time per customer was 126.2319
+minutes with a standard deviation of 18.1278, indicating rather dispersed data points when there are 2 servers serving
+a single line up.  The average wait time for 2 servers each serving their own line up was 128.2342 minutes with a
+standard deviation of 16.9515, again indicating dispersed data points. With this, 2 serves working with a single line
+up was slightly quicker than 2 servers working their own lineups. This difference is not substantial, therefore either
+method to minimize wait times will suffice.
